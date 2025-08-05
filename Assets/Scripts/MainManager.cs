@@ -20,6 +20,8 @@ public class MainManager : MonoBehaviour
     private bool m_GameOver = false;
 
     public TextMeshProUGUI playerNameText;
+    public TextMeshProUGUI bestPlayerNameText;
+    public TextMeshProUGUI bestScoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -27,10 +29,8 @@ public class MainManager : MonoBehaviour
         if (MenuManager.Instance != null)
         {
             playerNameText.text = MenuManager.Instance.playerName;
-        }
-        else
-        {
-            playerNameText.text = "Player: Unknown";
+            bestPlayerNameText.text = MenuManager.Instance.bestPlayerName;
+            bestScoreText.text = MenuManager.Instance.bestScore.ToString();
         }
 
         const float step = 0.6f;
@@ -83,5 +83,12 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        if (m_Points > MenuManager.Instance.bestScore)
+        {
+            MenuManager.Instance.bestScore = m_Points;
+            MenuManager.Instance.bestPlayerName = MenuManager.Instance.playerName;
+            MenuManager.Instance.SaveDataToFile();
+        }
     }
  }
