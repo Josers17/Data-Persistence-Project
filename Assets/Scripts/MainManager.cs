@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainManager : MonoBehaviour
 {
@@ -18,10 +19,20 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
-    
+    public TextMeshProUGUI playerNameText;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (MenuManager.Instance != null)
+        {
+            playerNameText.text = MenuManager.Instance.playerName;
+        }
+        else
+        {
+            playerNameText.text = "Player: Unknown";
+        }
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -73,9 +84,4 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
-
-    public void EnterName()
-    {
-        
-    }
-}
+ }
